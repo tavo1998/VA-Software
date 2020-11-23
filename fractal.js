@@ -7,7 +7,6 @@ let count = 0;
 let slider;
 let translateX = 1;
 let translateY = 1;
-let zoomFactor = 0;
 
 function centerCanvas(){
   var x = (windowWidth - width) / 2;
@@ -22,7 +21,9 @@ function setup() {
   canvas = createCanvas(canvasWidth, canvasHeight);
   background(200);
   centerCanvas(canvas);
-  lines.push(new Line(createVector(0 - zoomFactor,canvasHeight / 2), createVector(canvasWidth + zoomFactor,canvasHeight / 2)));
+  lines.push(new Line(createVector(0 ,canvasHeight / 4), createVector(canvasWidth, canvasHeight / 4), -PI / 3));
+  lines.push(new Line(createVector(0 ,canvasHeight / 4), createVector(canvasWidth / 2, canvasHeight), PI / 3));
+  lines.push(new Line(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth, canvasHeight / 4), PI / 3));
 }
 
 function draw() {
@@ -62,10 +63,11 @@ function keyPressed(){
 }
 
 class Line {
-  constructor(startPoint, endPoint){
+  constructor(startPoint, endPoint, degree){
     //Vectors
     this.startPoint = startPoint.copy();
     this.endPoint = endPoint.copy();
+    this.degree = degree;
   }
 
   generateChildrenLines(){
@@ -76,22 +78,22 @@ class Line {
 
     //Vector B
     let vectorB = p5.Vector.add(this.startPoint, distance);
-    let lineB = new Line(this.startPoint, vectorB);
+    let lineB = new Line(this.startPoint, vectorB, this.degree);
     childrenLines.push(lineB);
 
     //Vector D
     let vectorD = p5.Vector.sub(this.endPoint, distance);
-    let lineD = new Line(vectorD, this.endPoint);
+    let lineD = new Line(vectorD, this.endPoint, this.degree);
     childrenLines.push(lineD);
 
-    distance.rotate(-PI / 3);
+    distance.rotate(this.degree);
     //Vector C
     let vectorC = p5.Vector.add(vectorB, distance);
-    let lineC1 = new Line(vectorB, vectorC);
+    let lineC1 = new Line(vectorB, vectorC, this.degree);
     childrenLines.push(lineC1);
 
     //Vector D
-    let lineC2 = new Line(vectorC, vectorD);
+    let lineC2 = new Line(vectorC, vectorD, this.degree);
     childrenLines.push(lineC2);
 
     return childrenLines;
