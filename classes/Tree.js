@@ -18,7 +18,6 @@ class Tree {
         let line = new Tree(this.startPoint, this.endPoint, this.degree);
         childrenLines.push(line);
 
-
         //Vector A
         distance.rotate(this.degree);
         let vectorA = p5.Vector.add(this.endPoint, distance);
@@ -36,7 +35,7 @@ class Tree {
         return childrenLines;
     }
 
-    //Función que dibuja una línea Tree en el canvas, dependiendo de los puntos (vectores)
+    //Función que dibuja una Tree en el canvas, dependiendo de los puntos (vectores)
     drawTree() {
         line(this.startPoint.x, this.startPoint.y, this.endPoint.x, this.endPoint.y)
     }
