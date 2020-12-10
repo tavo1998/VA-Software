@@ -13,7 +13,8 @@ let lines = []
 let trees = []
 
 //Cantidad de recursividad a realizar
-let count = 0;
+let countKoch = 0;
+let countTree = 0;
 
 //Variables que manejan el centro de dibujo del fractal para poder desplazarlo.
 let translateX = 1;
@@ -36,17 +37,20 @@ function centerCanvas() {
 //Crear el canvvas con dimensiones canvasWidth, canvasHeight y color de fondo
 //Se crea las primeras lineas que forman el triangulo
 function setup() {
+    //Se crea el botón para seleccionar entre el par de fractales
     radio = createRadio();
-
     radio.option('Tree');
-    radio.option('koch Snowflake');
+    radio.option('Koch');
     radio.style('width', '60px');
+
     textAlign(CENTER);
     fill(255, 0, 0);
     canvas = createCanvas(canvasWidth, canvasHeight);
     background(200);
     centerCanvas(canvas);
-    strokeWeight(1)
+    strokeWeight(0.3)
+
+    //Se crean las primeras lineas a dibujar
     trees.push(new Tree(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth / 2, canvasHeight / 2), PI / 4));
     lines.push(new Line(createVector(0, canvasHeight / 4), createVector(canvasWidth, canvasHeight / 4), -PI / 3));
     lines.push(new Line(createVector(0, canvasHeight / 4), createVector(canvasWidth / 2, canvasHeight), PI / 3));
@@ -67,12 +71,15 @@ function draw() {
     colorMode(RGB);
     background(200);
     translate(translateX, translateY)
+
     radio.selected('Tree')
     let selected = radio.value()
+    //Si el radio button es Tree dibuja el arbol
     if (selected == 'Tree') {
         for (lineToDraw of trees) {
             lineToDraw.drawTree();
         }
+    //Si el radio button es Koch dibuja el copo de nieve
     } else {
 
         for (lineToDraw of lines) {
@@ -97,20 +104,22 @@ function keyPressed() {
         translateX -= 15
     } else if (keyCode === RIGHT_ARROW) {
         translateX += 15
-    } else if (keyCode === 32 && count < 7) {
+    } else if (keyCode === 32) {
         let linesToDraw = [];
-        if (radio.value() === 'Tree') {
+        //Dibuja el arbol cuando se oprime la tecla espacio
+        if (radio.value() === 'Tree' && countTree < 9) {
             for (treeToDivide of trees) {
                 linesToDraw = linesToDraw.concat(treeToDivide.generateChildrenTrees());
             }
             trees = linesToDraw;
-            count++;
-        } else {
+            countTree++;
+          //Dibujar el copo de nieve cuando se oprime la tecla espacio
+        } else if(radio.value() === 'Koch' && countKoch < 7) {
             for (lineToDivide of lines) {
                 linesToDraw = linesToDraw.concat(lineToDivide.generateChildrenLines());
             }
             lines = linesToDraw;
-            count++;
+            countKoch++;
         }
     }
 }
