@@ -46,9 +46,10 @@ function setup() {
     textAlign(CENTER);
     fill(255, 0, 0);
     canvas = createCanvas(canvasWidth, canvasHeight);
-    background(200);
     centerCanvas(canvas);
     strokeWeight(0.3)
+    stroke(0)
+    background('rgb(0,0,0)');
 
     //Se crean las primeras lineas a dibujar
     trees.push(new Tree(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth / 2, canvasHeight / 2), PI / 4));
@@ -67,9 +68,7 @@ function draw() {
     translate(-coorMouseX, -coorMouseY);
     translate();
 
-    clear();
-    colorMode(RGB);
-    background(200);
+    clear();   
     translate(translateX, translateY)
 
     radio.selected('Tree')
