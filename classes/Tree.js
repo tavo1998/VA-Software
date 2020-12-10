@@ -13,7 +13,7 @@ class Tree {
         let childrenLines = [];
 
         let distance = p5.Vector.sub(this.endPoint, this.startPoint);
-        distance.div(2);
+        distance.div(1.3);
 
         let line = new Tree(this.startPoint, this.endPoint, this.degree);
         childrenLines.push(line);

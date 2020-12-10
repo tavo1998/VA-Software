@@ -52,7 +52,7 @@ function setup() {
     background('rgb(0,0,0)');
 
     //Se crean las primeras lineas a dibujar
-    trees.push(new Tree(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth / 2, canvasHeight / 2), PI / 4));
+    trees.push(new Tree(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth / 2, canvasHeight / 1.3), PI / 10));
     lines.push(new Line(createVector(0, canvasHeight / 4), createVector(canvasWidth, canvasHeight / 4), -PI / 3));
     lines.push(new Line(createVector(0, canvasHeight / 4), createVector(canvasWidth / 2, canvasHeight), PI / 3));
     lines.push(new Line(createVector(canvasWidth / 2, canvasHeight), createVector(canvasWidth, canvasHeight / 4), PI / 3));
@@ -68,17 +68,17 @@ function draw() {
     translate(-coorMouseX, -coorMouseY);
     translate();
 
-    clear();   
+    clear();
     translate(translateX, translateY)
 
     radio.selected('Tree')
     let selected = radio.value()
-    //Si el radio button es Tree dibuja el arbol
+        //Si el radio button es Tree dibuja el arbol
     if (selected == 'Tree') {
         for (lineToDraw of trees) {
             lineToDraw.drawTree();
         }
-    //Si el radio button es Koch dibuja el copo de nieve
+        //Si el radio button es Koch dibuja el copo de nieve
     } else {
 
         for (lineToDraw of lines) {
@@ -112,8 +112,8 @@ function keyPressed() {
             }
             trees = linesToDraw;
             countTree++;
-          //Dibujar el copo de nieve cuando se oprime la tecla espacio
-        } else if(radio.value() === 'Koch' && countKoch < 7) {
+            //Dibujar el copo de nieve cuando se oprime la tecla espacio
+        } else if (radio.value() === 'Koch' && countKoch < 7) {
             for (lineToDivide of lines) {
                 linesToDraw = linesToDraw.concat(lineToDivide.generateChildrenLines());
             }
